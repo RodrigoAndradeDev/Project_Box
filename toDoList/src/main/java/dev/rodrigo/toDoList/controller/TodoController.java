@@ -4,8 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.NoArgsConstructor;
 
-@RestController
-@NoArgsConstructor
 
 public class TodoController {
     

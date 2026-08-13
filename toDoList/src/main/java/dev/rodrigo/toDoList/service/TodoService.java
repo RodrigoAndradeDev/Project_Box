@@ -3,6 +3,7 @@ package dev.rodrigo.toDoList.service;
 import org.springframework.stereotype.Service;
 
 import dev.rodrigo.toDoList.dto.TodoRequestDto;
+import dev.rodrigo.toDoList.dto.TodoResponseDto;
 import dev.rodrigo.toDoList.model.Todo;
 import dev.rodrigo.toDoList.repositories.TodoRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,31 +13,38 @@ import lombok.RequiredArgsConstructor;
 public class TodoService {
     
     private final TodoRepository todoRepository;
-    private final TodoRequestDto todoRequestDto;
-    private final Todo todo;
 
-    public Todo createTodo(TodoRequestDto todoRequestDto) {
+    public TodoResponseDto createTodo(TodoRequestDto todoRequestDto) {
+        Todo todo = new Todo();
         todo.setTitle(todoRequestDto.title());
         todo.setDescription(todoRequestDto.description());
         todo.setCompleted(false);
-        return todoRepository.save(todo);
+
+        Todo saved = todoRepository.save(todo);
+
+        return TodoResponseDto.fromEntity(saved);
     }
 
-    public Todo updateTodo(String id, TodoRequestDto todoRequestDto) {
+    public TodoResponseDto updateTodo(String id, TodoRequestDto todoRequestDto) {
         Todo existingTodo = todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Todo not found with id: " + id));
         existingTodo.setTitle(todoRequestDto.title());
         existingTodo.setDescription(todoRequestDto.description());
         existingTodo.setCompleted(todoRequestDto.completed());
-        return todoRepository.save(existingTodo);
+
+        Todo saved = todoRepository.save(existingTodo);
+
+        return TodoResponseDto.fromEntity(saved);
     }
 
     public void deleteTodo(String id) {
-        Todo existingTodo = todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Todo not found with id: " + id));
-        todoRepository.delete(existingTodo);
+        if(!todoRepository.existsById(id)){
+            throw new RuntimeException("Todo not found with id: " + id);
+        }
+        todoRepository.deleteById(id);
     }
 
-    public Todo getTodoById(String id) {
-        return todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Todo not found with id: " + id));
+    public TodoResponseDto getTodoById(String id) {
+        return TodoResponseDto.fromEntity(todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Todo not found with id: " + id)));
     }
 
 
