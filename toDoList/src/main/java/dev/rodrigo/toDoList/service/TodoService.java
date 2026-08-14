@@ -26,7 +26,7 @@ public class TodoService {
     }
 
     public TodoResponseDto updateTodo(String id, TodoRequestDto todoRequestDto) {
-        Todo existingTodo = todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Todo not found with id: " + id));
+        Todo existingTodo = searchOrFail(id);
         existingTodo.setTitle(todoRequestDto.title());
         existingTodo.setDescription(todoRequestDto.description());
         existingTodo.setCompleted(todoRequestDto.completed());
@@ -44,7 +44,11 @@ public class TodoService {
     }
 
     public TodoResponseDto getTodoById(String id) {
-        return TodoResponseDto.fromEntity(todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Todo not found with id: " + id)));
+        return TodoResponseDto.fromEntity(searchOrFail(id));
+    }
+
+    private Todo searchOrFail(String id) {
+        return todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Todo not found with id: " + id));
     }
 
 
