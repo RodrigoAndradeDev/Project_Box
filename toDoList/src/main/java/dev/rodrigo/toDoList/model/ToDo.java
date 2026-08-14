@@ -19,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "todo")
 @NoArgsConstructor
-public class Todo {
+public class ToDo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
