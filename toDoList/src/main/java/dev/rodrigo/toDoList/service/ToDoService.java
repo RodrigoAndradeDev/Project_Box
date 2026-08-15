@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ToDoService {
+public class ToDoService  extends RuntimeException {
     
     private final ToDoRepository todoRepository;
 
@@ -46,7 +46,4 @@ public class ToDoService {
     private ToDo searchOrFail(String id) {
         return todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Todo not found with id: " + id));
     }
-
-
-
 }
