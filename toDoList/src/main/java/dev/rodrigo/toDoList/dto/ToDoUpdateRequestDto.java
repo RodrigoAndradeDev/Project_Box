@@ -1,7 +1,7 @@
 package dev.rodrigo.toDoList.dto;
 
-public record ToDoRequestDto (
+public record ToDoUpdateRequestDto (
     String title,
     String description,
-    boolean completed
+    Boolean completed
 ){}

@@ -3,7 +3,7 @@ package dev.rodrigo.toDoList.dto;
 import dev.rodrigo.toDoList.model.ToDo;
 
 public record ToDoResponseDto(
-    String id,
+    Long id,
     String title,
     String description,
     boolean completed

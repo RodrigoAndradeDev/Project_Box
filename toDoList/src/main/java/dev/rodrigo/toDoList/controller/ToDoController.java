@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import dev.rodrigo.toDoList.dto.ToDoRequestDto;
+import dev.rodrigo.toDoList.dto.ToDoUpdateRequestDto;
+import dev.rodrigo.toDoList.dto.ToDoCreateRequestDto;
 import dev.rodrigo.toDoList.dto.ToDoResponseDto;
 import dev.rodrigo.toDoList.service.ToDoService;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +26,16 @@ public class ToDoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ToDoResponseDto> getToDoById(@PathVariable("id") String id) {
-        return ResponseEntity.status(HttpStatus.OK).body(todoService.getTodoById(id));
+        return ResponseEntity.ok().body(todoService.getTodoById(id));
     }
 
     @PostMapping
-    public ResponseEntity<ToDoResponseDto> createToDo(@RequestBody ToDoRequestDto todoRequestDto) {
+    public ResponseEntity<ToDoResponseDto> createToDo(@RequestBody ToDoCreateRequestDto todoRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(todoService.createTodo(todoRequestDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ToDoResponseDto> updateToDo(@PathVariable("id") String id, @RequestBody ToDoRequestDto todoRequestDto) {
+    public ResponseEntity<ToDoResponseDto> updateToDo(@PathVariable("id") String id, @RequestBody ToDoUpdateRequestDto todoRequestDto) {
         return ResponseEntity.ok().body(todoService.updateTodo(id, todoRequestDto));
     }
 
