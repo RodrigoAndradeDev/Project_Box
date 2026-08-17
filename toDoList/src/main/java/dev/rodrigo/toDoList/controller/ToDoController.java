@@ -25,7 +25,7 @@ public class ToDoController {
     private final ToDoService todoService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ToDoResponseDto> getToDoById(@PathVariable("id") String id) {
+    public ResponseEntity<ToDoResponseDto> getToDoById(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(todoService.getTodoById(id));
     }
 
@@ -35,12 +35,12 @@ public class ToDoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ToDoResponseDto> updateToDo(@PathVariable("id") String id, @RequestBody ToDoUpdateRequestDto todoRequestDto) {
+    public ResponseEntity<ToDoResponseDto> updateToDo(@PathVariable("id") Long id, @RequestBody ToDoUpdateRequestDto todoRequestDto) {
         return ResponseEntity.ok().body(todoService.updateTodo(id, todoRequestDto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteToDo(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deleteToDo(@PathVariable("id") Long id) {
         todoService.deleteTodo(id);
         return ResponseEntity.noContent().build();
     }

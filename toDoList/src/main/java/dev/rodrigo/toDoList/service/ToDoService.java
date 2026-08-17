@@ -3,6 +3,7 @@ package dev.rodrigo.toDoList.service;
 import org.springframework.stereotype.Service;
 
 import dev.rodrigo.toDoList.dto.ToDoUpdateRequestDto;
+import dev.rodrigo.toDoList.exceptions.ToDoNotFoundException;
 import dev.rodrigo.toDoList.dto.ToDoCreateRequestDto;
 import dev.rodrigo.toDoList.dto.ToDoResponseDto;
 import dev.rodrigo.toDoList.model.ToDo;
@@ -24,7 +25,7 @@ public class ToDoService {
         return ToDoResponseDto.fromEntity(saved);
     }
 
-    public ToDoResponseDto updateTodo(String id, ToDoUpdateRequestDto todoRequestDto) {
+    public ToDoResponseDto updateTodo(Long id, ToDoUpdateRequestDto todoRequestDto) {
         ToDo existingTodo = findOrThrow(id);
         existingTodo.setTitle(todoRequestDto.title());
         existingTodo.setDescription(todoRequestDto.description());
@@ -33,18 +34,18 @@ public class ToDoService {
         return ToDoResponseDto.fromEntity(saved);
     }
 
-    public void deleteTodo(String id) {
+    public void deleteTodo(Long id) {
         if(!todoRepository.existsById(id)){
-            throw new RuntimeException("Todo not found with id: " + id);
+            throw new ToDoNotFoundException("Todo not found with id: " + id);
         }
         todoRepository.deleteById(id);
     }
 
-    public ToDoResponseDto getTodoById(String id) {
+    public ToDoResponseDto getTodoById(Long id) {
         return ToDoResponseDto.fromEntity(findOrThrow(id));
     }
 
-    private ToDo findOrThrow(String id) {
-        return todoRepository.findById(id).orElseThrow(() -> new RuntimeException("Todo not found with id: " + id));
+    private ToDo findOrThrow(Long id) {
+        return todoRepository.findById(id).orElseThrow(() -> new ToDoNotFoundException("Todo not found with id: " + id));
     }
 }
