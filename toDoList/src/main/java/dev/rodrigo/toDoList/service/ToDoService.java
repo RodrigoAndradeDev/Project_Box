@@ -1,5 +1,8 @@
 package dev.rodrigo.toDoList.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import dev.rodrigo.toDoList.dto.ToDoUpdateRequestDto;
@@ -43,6 +46,12 @@ public class ToDoService {
 
     public ToDoResponseDto getTodoById(Long id) {
         return ToDoResponseDto.fromEntity(findOrThrow(id));
+    }
+
+    public List<ToDoResponseDto> fetchAllToDo(Pageable pageable) {
+        return todoRepository.findAll(pageable)
+            .map(ToDoResponseDto::fromEntity)
+            .getContent();
     }
 
     private ToDo findOrThrow(Long id) {
