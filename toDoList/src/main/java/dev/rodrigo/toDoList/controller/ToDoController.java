@@ -54,7 +54,8 @@ public class ToDoController {
     public List<ToDoResponseDto> getAllToDos(@RequestParam(required = false, defaultValue = "1") int pageNo,
                                              @RequestParam(required = false, defaultValue = "5") int pageSize,
                                              @RequestParam(required = false, defaultValue = "id") String sortBy,
-                                             @RequestParam(required = false, defaultValue = "ASC") String sortDir){
+                                             @RequestParam(required = false, defaultValue = "ASC") String sortDir,
+                                             @RequestParam(required = false) String search){
 
 
 
@@ -64,7 +65,7 @@ public class ToDoController {
         } else{
             sort = Sort.by(sortBy).descending();
         }
-    return todoService.fetchAllToDo(PageRequest.of(pageNo-1, pageSize, sort));
+    return todoService.fetchAllToDo(PageRequest.of(pageNo-1, pageSize, sort), search);
 
         
     }

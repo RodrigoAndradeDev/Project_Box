@@ -48,10 +48,15 @@ public class ToDoService {
         return ToDoResponseDto.fromEntity(findOrThrow(id));
     }
 
-    public List<ToDoResponseDto> fetchAllToDo(Pageable pageable) {
-        return todoRepository.findAll(pageable)
-            .map(ToDoResponseDto::fromEntity)
-            .getContent();
+    public List<ToDoResponseDto> fetchAllToDo(Pageable pageable, String search) {
+        
+            if (search == null) {
+                return todoRepository.findAll(pageable)
+                    .map(ToDoResponseDto::fromEntity)
+                    .getContent();
+            } else{
+                return todoRepository.findByTitle(search, pageable).map(ToDoResponseDto::fromEntity).getContent();
+            }
     }
 
     private ToDo findOrThrow(Long id) {
