@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class ToDoController {
 
 
-    //add @Valid para fazer a validação basica
+    
 
     private final ToDoService todoService;
 
