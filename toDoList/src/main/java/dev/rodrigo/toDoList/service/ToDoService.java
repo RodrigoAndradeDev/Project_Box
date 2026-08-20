@@ -38,9 +38,7 @@ public class ToDoService {
     }
 
     public void deleteTodo(Long id) {
-        if(!todoRepository.existsById(id)){
-            throw new ToDoNotFoundException("Todo not found with id: " + id);
-        }
+        findOrThrow(id);
         todoRepository.deleteById(id);
     }
 

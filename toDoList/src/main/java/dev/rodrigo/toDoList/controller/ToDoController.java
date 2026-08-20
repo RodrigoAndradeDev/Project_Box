@@ -27,6 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/todos")
 public class ToDoController {
 
+
+    //add @Valid para fazer a validação basica
+
     private final ToDoService todoService;
 
     @GetMapping("/{id}")
@@ -65,9 +68,7 @@ public class ToDoController {
         } else{
             sort = Sort.by(sortBy).descending();
         }
-    return todoService.fetchAllToDo(PageRequest.of(pageNo-1, pageSize, sort), search);
-
         
+        return todoService.fetchAllToDo(PageRequest.of(pageNo-1, pageSize, sort), search);   
     }
-
 }
