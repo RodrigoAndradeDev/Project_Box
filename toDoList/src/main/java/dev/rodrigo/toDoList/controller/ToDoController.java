@@ -20,6 +20,7 @@ import dev.rodrigo.toDoList.dto.ToDoUpdateRequestDto;
 import dev.rodrigo.toDoList.dto.ToDoCreateRequestDto;
 import dev.rodrigo.toDoList.dto.ToDoResponseDto;
 import dev.rodrigo.toDoList.service.ToDoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -38,12 +39,12 @@ public class ToDoController {
     }
 
     @PostMapping
-    public ResponseEntity<ToDoResponseDto> createToDo(@RequestBody ToDoCreateRequestDto todoRequestDto) {
+    public ResponseEntity<ToDoResponseDto> createToDo(@Valid @RequestBody ToDoCreateRequestDto todoRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(todoService.createTodo(todoRequestDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ToDoResponseDto> updateToDo(@PathVariable("id") Long id, @RequestBody ToDoUpdateRequestDto todoRequestDto) {
+    public ResponseEntity<ToDoResponseDto> updateToDo(@Valid @PathVariable("id") Long id, @RequestBody ToDoUpdateRequestDto todoRequestDto) {
         return ResponseEntity.ok().body(todoService.updateTodo(id, todoRequestDto));
     }
 

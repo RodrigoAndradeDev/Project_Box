@@ -14,6 +14,10 @@ public class RestExceptionHandler {
 
     //Criar o tratamento para o tipo de @Valid
 
+
+    
+
+
     @ExceptionHandler(ToDoNotFoundException.class)
     public ResponseEntity<RestErrorMessage> toDoNotFoundExceptionHandler(ToDoNotFoundException e){
         RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.NOT_FOUND, e.getMessage());
